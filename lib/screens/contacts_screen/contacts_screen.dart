@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_chat/consts.dart';
 import 'package:firebase_chat/models/chat_data.dart';
 import 'package:firebase_chat/models/user.dart';
 import 'package:firebase_chat/providers/chat.dart';
@@ -32,8 +31,10 @@ class ContactsScreen extends StatelessWidget {
     // if has interacted pass chats object otherwise pass an empty one
     final initData =
         Provider.of<Chat>(context, listen: false).chats.firstWhere((element) {
+          print("pppppppppppppppppppppp=${person.id}");
       return element.peer.id == person.id;
     }, orElse: () {      
+      print("ppppppppp2222222pppppppp=${person.id}");
       return new ChatData(
         groupId: getGroupId(context, item.documentID),
         userId: userId,

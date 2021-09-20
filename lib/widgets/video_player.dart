@@ -1,8 +1,8 @@
 import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:firebase_chat/consts.dart';
 
 class CVideoPlayer extends StatefulWidget {
   final File video;

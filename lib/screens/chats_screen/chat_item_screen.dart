@@ -77,7 +77,9 @@ class _ChatItemScreenState extends State<ChatItemScreen> {
   @override
   void initState() {
     super.initState();
-    print('initcalled =============');
+    print('initcalled ====={widget.chatData.peerId}');
+     print("peerrrrrIdss:::::::::::::::$peerId");
+     print("chat datasss:::::::${ widget.chatData.peerId}");
     db = DB();
     _textEditingController = TextEditingController();
     _scrollController = ScrollController();
@@ -123,7 +125,7 @@ class _ChatItemScreenState extends State<ChatItemScreen> {
     final newMessage = Message(
       content: content,
       fromId: userId,
-      toId: peerId,
+      toId: widget.chatData.peerId,
       sendDate: time,
       timeStamp: time.millisecondsSinceEpoch.toString(),
       isSeen: false,
@@ -150,26 +152,29 @@ class _ChatItemScreenState extends State<ChatItemScreen> {
       );
     }
 
-    final userContacts = Provider.of<Chat>(context, listen: false).getContacts;
-    // add user to contacts if not already in contacts
-    if (!userContacts.contains(peerId)) {
-      Provider.of<Chat>(context, listen: false).addToContacts(peerId);
+        final userContacts = Provider.of<Chat>(context, listen: false).getContacts;
+    // dd user to contacts if not already in contacts
+    if (!userContacts.contains(widget.chatData.peerId)) {
+      print("peerrrrrIdsss:::::::::::::::$peerId");
+      Provider.of<Chat>(context, listen: false).addToContacts(widget.chatData.peerId);
       db.updateContacts(userId, userContacts);
 
       // add to peer contacts too
-      var userRef = await db.addToPeerContacts(peerId, userId);
+      var userRef = await db.addToPeerContacts(widget.chatData.peerId, userId);
 
       User person = User.fromJson(userRef.data);
       ChatData initChatData = ChatData(
         userId: userId,
-        peerId: peerId,
+        peerId: widget.chatData.peerId,
         groupId: groupChatId,
         peer: person,
         messages: [newMessage],
       );
-      Provider.of<Chat>(context, listen: false).addToInitChats(initChatData);
+      // Provider.of<Chat>(context, listen: false).addToInitChats(initChatData);
     } else {
+       print("peerrrrrId:::::::::::::::$widget.chatData.peerId)");
       Provider.of<Chat>(context, listen: false).bringChatToTop(groupChatId);
+      print("hhhhhhhhhhhhhhhhhh= ${!userContacts.contains(widget.chatData.peerId)}");
     }
   }
 

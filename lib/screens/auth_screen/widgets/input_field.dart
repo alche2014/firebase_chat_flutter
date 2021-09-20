@@ -138,6 +138,8 @@ class _InputForm extends StatelessWidget {
               onSaved: (value) {              
                 _authData['password'] = value.trim();
                 print('email saved -----> ${_authData['password']}');
+                //  print('peerId ----->${peer}');
+
               },
               validator: (_) {},
               obscureText: true,

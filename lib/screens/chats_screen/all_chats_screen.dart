@@ -24,6 +24,7 @@ class _AllChatsScreenState extends State<AllChatsScreen>
           itemCount: chats.length,
           itemBuilder: (ctx, i) => ChatListItem(chatData: chats[i]),
           separatorBuilder: (ctx, i) {
+            print("object:::::::::::::${ chats[i].peerId}");
             return Divider(
               indent: 0,
               endIndent: 15,
@@ -37,11 +38,13 @@ class _AllChatsScreenState extends State<AllChatsScreen>
 
   Widget _buildEmptyIndicator() => Center(
         child: Text(
+        
           'You have no messages yet.',
+      
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: kBaseWhiteColor,
+            color: kBlackColor,
           ),
         ),
       );
@@ -70,7 +73,7 @@ class _AllChatsScreenState extends State<AllChatsScreen>
       body: StreamBuilder(
         stream: db.getUserContactsStream(uid),
         builder: (ctx, snapshots) {
-          if (!isLoading && snapshots.hasData) updateChats(context, snapshots);
+          // if (!isLoading && snapshots.hasData) updateChats(context, snapshots);
         
           return Column(
             children: [
@@ -91,38 +94,11 @@ class _AllChatsScreenState extends State<AllChatsScreen>
               ],
             ),
           ),
-              // Container(
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       TabScreenTitle(
-              //         title: 'Chats',
-              //         actionWidget: CupertinoButton(
-              //           padding: const EdgeInsets.all(0),
-              //           onPressed: () {},
-              //           child: Container(
-              //             padding: const EdgeInsets.all(5),
-              //             child: Icon(Icons.add, color: Colors.white, size: 25),
-              //             decoration: BoxDecoration(
-              //               color: kBaseWhiteColor,
-              //               borderRadius: BorderRadius.circular(10),
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //       // SizedBox(height: 15),
-              //       // Stories(),
-              //     ],
-              //   ),
-              // ),
-              // SizedBox(height: 10),
-              // Divider(
-              //   color: kBorderColor3,
-              //   height: 0,
-              // ),
               isLoading
                   ? Center(child: CupertinoActivityIndicator())
-                  : chats.isEmpty ? _buildEmptyIndicator() : _buildChats(chats),
+                  : chats.isEmpty ? Container(
+                  height: MediaQuery.of(context).size.height/1.5,
+                    child: _buildEmptyIndicator()) : _buildChats(chats),
             ],
           );
         },

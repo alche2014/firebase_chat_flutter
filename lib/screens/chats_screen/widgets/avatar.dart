@@ -18,7 +18,7 @@ class Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-          backgroundColor: color?? kBlackColor2,
+          backgroundColor: color?? Colors.grey.withOpacity(0.3),
           backgroundImage:
             imageUrl == null || imageUrl == ''
                   ? null

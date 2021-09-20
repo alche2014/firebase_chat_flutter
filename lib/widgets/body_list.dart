@@ -21,13 +21,7 @@ class BodyList extends StatelessWidget {
           ),
         ),
         child: child,
-        // ClipRRect(
-        //   borderRadius: BorderRadius.only(
-        //     topRight: Radius.circular(30),
-        //     topLeft: Radius.circular(30),
-        //   ),
-        //   child: child,
-        // ),
+       
       ),
     );
   }

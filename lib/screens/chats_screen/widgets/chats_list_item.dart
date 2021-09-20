@@ -48,6 +48,7 @@ class _ChatListItemState extends State<ChatListItem> {
     return '$hRes:$mRes';
   }
 
+  
   // add new messages to ChatData and update unread count
   void _addNewMessages(Message newMsg) {
     final isIos = Theme.of(context).platform == TargetPlatform.iOS;
@@ -73,7 +74,7 @@ class _ChatListItemState extends State<ChatListItem> {
     }
   }
 
-  void navToChatScreen() {
+    void navToChatScreen() {
     widget.chatData.unreadCount = 0;
 
     Navigator.of(context).push(
@@ -82,6 +83,7 @@ class _ChatListItemState extends State<ChatListItem> {
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +101,7 @@ class _ChatListItemState extends State<ChatListItem> {
             contentPadding: const EdgeInsets.symmetric(horizontal: 16),
             leading: Avatar(
               imageUrl: widget.chatData.peer.imageUrl,
-              color: kBaseWhiteColor,
+              color: Colors.grey.withOpacity(0.1),
               radius: 27,
             ),
             title: Text(peer.username, style: TextStyle(color: Colors.black,fontWeight: FontWeight.w500)),

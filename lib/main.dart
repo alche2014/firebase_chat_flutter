@@ -1,6 +1,7 @@
 import 'package:firebase_chat/consts.dart';
 import 'package:firebase_chat/providers/auth.dart';
 import 'package:firebase_chat/providers/chat.dart';
+import 'package:firebase_chat/screens/auth_screen/auth_screen.dart';
 import 'package:firebase_chat/screens/auth_screen/widgets/signin_or_signup_screen.dart';
 import 'package:firebase_chat/screens/home.dart';
 import 'package:firebase_chat/utils/theme.dart';
@@ -44,7 +45,7 @@ enum AuthMode {
               builder: (ctx, snapshot) {
                 return snapshot.connectionState == ConnectionState.waiting
                 ? Center(child: CupertinoActivityIndicator())
-                : snapshot.data == null ? SigninOrSignup(): Home();
+                : snapshot.data == null ? AuthScreen(): Home();
               },
             ),
             debugShowCheckedModeBanner: false,
