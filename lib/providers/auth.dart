@@ -73,8 +73,8 @@ class Auth with ChangeNotifier implements BaseAuth {
     } catch (error) {
       print(error);
       return false;
-    }
-  }
+      }
+        }
 
   @override
   Future<void> signOut() {

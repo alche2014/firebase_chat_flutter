@@ -94,12 +94,12 @@ class DB {
     try {
       _usersCollection
           .document(userId)
-          .setData({'contacts': contacts}, merge: true);
+          .setData({'contacts': contacts}, merge: true); 
     } catch (error) {
       print(
           '****************** DB updateContacts error **********************');
       print(error);
-      throw error;
+      throw error;   
     }
   }
 
@@ -108,19 +108,31 @@ class DB {
     DocumentReference doc;
     DocumentSnapshot docSnapshot;
 
-    try {
+   try{
       doc = _usersCollection.document(peerId);
       docSnapshot = await doc.get();
 
       var peerContacts = [];
 
-      docSnapshot.data['contacts'].forEach((elem) => peerContacts.add(elem));
+      // docSnapshot.data['contacts'].forEach((elem) => peerContacts.add(elem));
       peerContacts.add(newContact);
 
-      Firestore.instance.runTransaction((transaction) async {
-        final freshDoc = await transaction.get(doc);
-        transaction.update(freshDoc.reference, {'contacts': peerContacts});
-      });
+      Firestore.instance.runTransaction((Transaction transaction){
+        return  transaction.get(doc)
+        .then((value){
+           { if (value.exists) {
+              transaction.update(doc, {'contacts': peerContacts});
+            //  return docSnapshot;
+            //  return Promise.resolve(true);
+
+              
+             }  
+           }});
+      
+      // async {
+      //  final freshDoc = await
+        
+        });
 
       // doc.setData({'contacts': peerContacts}, merge: true);
     } catch (error) {
@@ -187,17 +199,25 @@ class DB {
   }
 
   void updateMessageField(dynamic snapshot, String field, dynamic value) {
-    try {
-      Firestore.instance.runTransaction((transaction) async {
-        // DocumentSnapshot freshDoc = await transaction.get(snapshot.reference);
-        transaction.update(snapshot.reference, {'$field': value});
-      });
-    } catch (error) {
-      print(
-          '****************** DB updateMessageField error **********************');
-      print(error);
-      throw error;
-    }
+    // try {
+    //   Firestore.instance.runTransaction((transaction) async {
+    //     // DocumentSnapshot freshDoc = await transaction.get(snapshot.reference);
+    //     transaction.update(snapshot.reference, {'$field': value});
+    //   });
+    // } catch (error) {
+    //   print( '****************** DB updateMessageField error **********************');
+    //   print(error);
+    //   throw error;
+    // }
+    Firestore.instance .runTransaction((Transaction tx)
+    { return tx.get(snapshot.reference).then((recipeeSnapshot)
+    {if (recipeeSnapshot.exists) {
+    return  tx.update(snapshot.reference, <String, dynamic>{ 
+    '$field': value, }); 
+    } });
+     });
+
+
   }
 
   // USER INFO
@@ -219,7 +239,7 @@ class DB {
     }
   }
 
-  Future<DocumentSnapshot> getUserDocRef(String userId) async {
+  Future<DocumentSnapshot> getUserDocRef(String userId)  {
     try {
       return _usersCollection.document(userId).get();
     } catch (error) {
@@ -229,7 +249,7 @@ class DB {
     }
   }
 
-  void updateUserInfo(String userId, Map<String, dynamic> data) async {
+  void updateUserInfo(String userId, Map<String, dynamic> data)  {
     try {
       _usersCollection.document(userId).setData(data, merge: true);
     } catch (error) {

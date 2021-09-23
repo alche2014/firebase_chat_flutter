@@ -11,12 +11,25 @@ import 'package:firebase_chat/screens/chats_screen/all_chats_screen.dart';
 import 'package:firebase_chat/screens/profile_screen/profile_info.dart';
 import 'package:firebase_chat/services/db.dart';
 import 'contacts_screen/contacts_screen.dart';
+import 'package:connectivity/connectivity.dart';
+
 
 
 class Home extends StatefulWidget {
+
+
   @override
   _HomeState createState() => _HomeState();
 }
+ Future<bool> check() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      return true;
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      return true;
+    }
+    return false;
+  }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin, 
   WidgetsBindingObserver  {
@@ -36,21 +49,25 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin,
         Provider.of<Chat>(context, listen: false).getUserDetailsAndContacts().then((value) {
           if(value)
           Provider.of<Chat>(context, listen: false).fetchChats();
-          _updateOnlineStatus(true);          
-        });        
-      }).then((value) => setState(() => initLoaded = true));    
-  }
+          check().then((intenet) {
+         if (intenet != null && intenet) {
+         _updateOnlineStatus(true);   
+        // Internet Present Case
+         }
+      // No-Internet Case
+    });
+                
+    }
+     );        
+      }).then((value) => setState(() => initLoaded = true)
+      //);    
+  );}
 
 
+     
 
 
-
-
-
-
-
-
-
+  
 
 
 

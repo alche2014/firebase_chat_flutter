@@ -35,9 +35,9 @@ class ReplyMessageBubble extends StatelessWidget {
       onTap: _getReplyDetails,
       child: Container(
         child: Column(
-          crossAxisAlignment: message.fromId == peer.id
-              ? CrossAxisAlignment.start
-              : CrossAxisAlignment.end,
+        crossAxisAlignment: message.fromId == peer.id
+        ? CrossAxisAlignment.start
+        : CrossAxisAlignment.end,
           children: [
             Padding(
               padding: EdgeInsets.only(

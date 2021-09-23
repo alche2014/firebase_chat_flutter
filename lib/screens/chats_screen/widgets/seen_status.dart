@@ -28,11 +28,11 @@ class SeenStatus extends StatelessWidget {
           child: Text(
             getTime(),
             style: TextStyle(
-              fontSize: 14,
-              color: Colors.white.withOpacity(0.6),
+            fontSize: 14,
+            color: Colors.grey,
+             ),
             ),
-          ),
-        ),
+            ),
         SizedBox(
           width: 5,
         ),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_chat/consts.dart';
 import 'package:firebase_chat/providers/auth.dart';
 import 'package:firebase_chat/providers/chat.dart';
@@ -9,26 +10,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:provider/provider.dart';
-// import 'package:firebase_chat/Login/GoogleLogin.dart';
-// import 'package:firebase_chat/components/FirebaseLogin.dart';
-
 void main() async {
    await DotEnv().load('.env');
+   final Firestore firestore = Firestore();
+  //firestore presistance initaization
+   await firestore.settings(timestampsInSnapshotsEnabled: true);
    runApp(MyApp());
-}
+    }
 
-enum AuthMode {
+  enum AuthMode {
   LOGGED_IN,
   LOGGED_OUT,
-}
+   } 
 
   class MyApp extends StatelessWidget {
   final future = Auth().getCurrentUser();
 
+
   @override
   Widget build(BuildContext context) {
+
     FlutterStatusbarcolor.setStatusBarColor(kPrimaryColor.withOpacity(0.1));
     FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
+
     return MultiProvider(
         providers: [
           ChangeNotifierProvider.value(value: Auth()),
